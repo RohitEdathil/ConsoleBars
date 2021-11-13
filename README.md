@@ -1,3 +1,8 @@
+![Pub Version (including pre-releases)](https://img.shields.io/pub/v/console_bars?include_prereleases)
+![GitHub last commit](https://img.shields.io/github/last-commit/RohitEdathil/ConsoleBars)
+![GitHub language count](https://img.shields.io/github/languages/count/RohitEdathil/ConsoleBars)
+![GitHub top language](https://img.shields.io/github/languages/top/RohitEdathil/ConsoleBars)
+
 A package for creating awesome progress bars and loading animations in console.
 
 ## Usage
