@@ -1,4 +1,4 @@
-name: cd-action-test-publish
+name: cd-action-publish
 on:
   release:
     types: [published] 
