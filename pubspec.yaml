@@ -1,6 +1,6 @@
 name: console_bars
 description: A starting point for Dart libraries or applications.
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/RohitEdathil/ConsoleBars
 
 environment:

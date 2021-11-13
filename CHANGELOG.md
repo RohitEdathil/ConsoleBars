@@ -10,3 +10,7 @@
 ## 1.0.1
 
 - Added gif in readme
+
+## 1.0.2
+
+- Updated readme

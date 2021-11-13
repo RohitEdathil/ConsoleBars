@@ -7,6 +7,16 @@ A package for creating an awesome progress bar in console.
 
 ## Usage
 
+Options:
+
+- `total` : Total number of steps
+- `desc `: Simple text shown before the bar (optional)
+- `space` : Character denoting empty space (default : ' ')
+- `fill `: Character denoting filled space (default : '█')
+- `time `: Toggle timing mode (default : false)
+- `percentage` : Toggle percentage display (default : false)
+- `scale` : Width of the bar (between: 0 and 1, default: 0.5)
+
 Code:
 
 ```dart
@@ -20,6 +30,7 @@ final p = FillingBar(desc: "Loading", total: 1000, time: true, percentage:true);
 Result:
 
 ![Animation](https://github.com/RohitEdathil/ConsoleBars/blob/master/img/Animation.gif)
+
 ```
 Loading : ████████████████████████████████████████.................... 673/1000 67.3% [ 0:00:13.28 / 0:00:06.45 ]
 ```
