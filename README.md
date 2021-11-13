@@ -1,21 +1,28 @@
 A package for creating awesome progress bars and loading animations in console.
 
-[![cd-action-publish](https://github.com/RohitEdathil/ConsoleBars/actions/workflows/main.yml/badge.svg)](https://github.com/RohitEdathil/ConsoleBars/actions/workflows/main.yml)
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+```
+pub add console_bars
+```
 
-## Usage
+## Available Progress Bars
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+- ### FillingBar
+  Code:
 
 ```dart
-const like = 'sample';
+final p = FillingBar(desc: "Loading", total: 1000, time: true);
+  for (var i = 0; i < 1000; i++) {
+    p.increment();
+    sleep(Duration(milliseconds: 10));
+  }
 ```
+
+Result:
+
+```
+Loading : ████████████████████████████████████████.................... 673/1000 [ 0:00:13.28 / 0:00:06.45 ]
+```
+
+More coming soon :)
