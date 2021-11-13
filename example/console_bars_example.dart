@@ -13,4 +13,5 @@ void main(List<String> args) {
     p.increment();
     sleep(Duration(milliseconds: 10));
   }
+  print("\nDone");
 }
