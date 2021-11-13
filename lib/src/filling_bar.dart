@@ -5,17 +5,7 @@ import 'dart:io';
 ///
 /// Looks like this:
 ///
-///
-/// (without time display)
-///
-///
-/// Loading : ████████████████████████████████████████.................... 673/1000
-///
-///
-/// (with time display)
-///
-///
-/// Loading : ████████████████████████████████████████.................... 673/1000 [ 0:00:13.28 / 0:00:06.45 ]
+/// Loading : ████████████████████████████████████████.................... 673/1000 67.3% [ 0:00:13.28 / 0:00:06.45 ]
 
 class FillingBar {
   // Counts
@@ -28,6 +18,8 @@ class FillingBar {
   final clock = Stopwatch();
   bool time;
 
+  // Percentage
+  bool percentage;
   // Decorations
   final String desc;
   String space;
@@ -40,6 +32,7 @@ class FillingBar {
   /// - space : Character denoting empty space (default : ' ')
   /// - fill : Character denoting filled space (default : '█')
   /// - time : Toggle timing mode (default : false)
+  /// - percentage : Toggle percentage display (default : false)
   /// - scale : Width of the bar (between: 0 and 1, default: 0.5)
   FillingBar({
     required this.total,
@@ -47,6 +40,7 @@ class FillingBar {
     this.space = ".",
     this.fill = "█",
     this.time = false,
+    this.percentage = false,
     this.scale = 0.5,
   }) {
     max = ((stdout.terminalColumns - desc.length) * scale).toInt();
@@ -96,8 +90,12 @@ class FillingBar {
           eta.toString().substring(0, 10) +
           " ]";
     }
+    String perc = '';
+    if (percentage) {
+      perc = "${current * 100 / total}%";
+    }
     final frame =
-        "$desc : ${fill * progress}${space * (max - progress)} $current/$total $timeStr ";
+        "$desc : ${fill * progress}${space * (max - progress)} $current/$total $perc $timeStr";
     stdout.write("\r");
     stdout.write(frame);
   }
