@@ -3,7 +3,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/RohitEdathil/ConsoleBars)
 ![GitHub top language](https://img.shields.io/github/languages/top/RohitEdathil/ConsoleBars)
 
-A package for creating awesome progress bars and loading animations in console.
+A package for creating an awesome progress bar in console.
 
 ## Usage
 
@@ -19,6 +19,7 @@ final p = FillingBar(desc: "Loading", total: 1000, time: true, percentage:true);
 
 Result:
 
+![Animation](https://github.com/RohitEdathil/ConsoleBars/blob/master/img/Animation.gif)
 ```
 Loading : ████████████████████████████████████████.................... 673/1000 67.3% [ 0:00:13.28 / 0:00:06.45 ]
 ```
