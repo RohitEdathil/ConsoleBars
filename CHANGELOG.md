@@ -6,3 +6,7 @@
 
 - Added support for %
 - First stable build
+
+## 1.0.1
+
+- Added gif in readme
