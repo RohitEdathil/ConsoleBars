@@ -14,5 +14,5 @@ jobs:
       - name: 🚀Publish
         uses: RatakondalaArun/pub.dev-cd@v1.0
         with:
-          creditionals: ${{secrets.PUB_CREDITIONALS}}
+          creditionals: ${{secrets.CREDITIONALS}}
       
