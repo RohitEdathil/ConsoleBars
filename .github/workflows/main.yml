@@ -12,7 +12,7 @@ jobs:
       - name: 🔧 Setup Dart SDK
         uses: dart-lang/setup-dart@v1.0 # setups dart sdk on this machine
       - name: 🚀Publish
-        uses: RatakondalaArun/pub.dev-cd@v1
+        uses: RatakondalaArun/pub.dev-cd@v1.0
         with:
           creditionals: ${{secrets.PUB_CREDITIONALS}}
       
