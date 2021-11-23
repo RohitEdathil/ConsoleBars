@@ -1,13 +1,10 @@
 name: console_bars
-description: A starting point for Dart libraries or applications.
-version: 1.0.2
+description: A package for creating a customizable progress bar in console easily.
+version: 1.0.3
 homepage: https://github.com/RohitEdathil/ConsoleBars
 
 environment:
   sdk: ">=2.14.4 <3.0.0"
-
-# dependencies:
-#   path: ^1.8.0
 
 dev_dependencies:
   lints: ^1.0.0
