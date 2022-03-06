@@ -18,3 +18,7 @@
 ## 1.0.3
 
 - Added description
+
+## 1.0.4
+
+- Fixed "Cant read terminal width" error
