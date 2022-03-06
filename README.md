@@ -11,11 +11,12 @@ Options:
 
 - `total` : Total number of steps
 - `desc `: Simple text shown before the bar (optional)
-- `space` : Character denoting empty space (default : ' ')
+- `space` : Character denoting empty space (default : '.')
 - `fill `: Character denoting filled space (default : '█')
 - `time `: Toggle timing mode (default : false)
 - `percentage` : Toggle percentage display (default : false)
-- `scale` : Width of the bar (between: 0 and 1, default: 0.5)
+- `scale` : Scale of the bar relative to width (between: 0 and 1, default: 0.5, Irrelavant if width is specified)
+- `width` : Width of the bar (If not specified, it will be automatically calculated using the terminal width and scale)
 
 Code:
 

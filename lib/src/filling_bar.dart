@@ -25,25 +25,34 @@ class FillingBar {
   String space;
   String fill;
   double scale;
+  int? width;
 
   /// Arguments:
   /// - total : Total number of steps
   /// - desc : Simple text shown before the bar (optional)
-  /// - space : Character denoting empty space (default : ' ')
+  /// - space : Character denoting empty space (default : '.')
   /// - fill : Character denoting filled space (default : '█')
   /// - time : Toggle timing mode (default : false)
   /// - percentage : Toggle percentage display (default : false)
-  /// - scale : Width of the bar (between: 0 and 1, default: 0.5)
-  FillingBar({
-    required this.total,
-    this.desc = "",
-    this.space = ".",
-    this.fill = "█",
-    this.time = false,
-    this.percentage = false,
-    this.scale = 0.5,
-  }) {
-    max = ((stdout.terminalColumns - desc.length) * scale).toInt();
+  /// - scale : Scale of the bar relative to width (between: 0 and 1, default: 0.5, Irrelavant if width is specified)
+  /// - width : Width of the bar (If not specified, it will be automatically calculated using the terminal width and scale)
+  ///
+  FillingBar(
+      {required this.total,
+      this.desc = "",
+      this.space = ".",
+      this.fill = "█",
+      this.time = false,
+      this.percentage = false,
+      this.scale = 0.5,
+      this.width}) {
+    // Handles width of the bar, throws an error if it's not specified and the terminal width is not available
+    try {
+      max = width ?? ((stdout.terminalColumns - desc.length) * scale).toInt();
+    } on StdoutException {
+      throw StdoutException(
+          "Could not get terminal width, try specifying a width manually");
+    }
     if (time) {
       clock.start();
       scheduleMicrotask(autoRender);
