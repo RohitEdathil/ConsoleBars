@@ -3,7 +3,9 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/RohitEdathil/ConsoleBars)
 ![GitHub top language](https://img.shields.io/github/languages/top/RohitEdathil/ConsoleBars)
 
-A package for creating an awesome progress bar in console.
+A package for creating an awesome progress bar in the terminal. Handy while developing a CLI or a desktop utility in dart.
+
+### [See in pub.dev](https://pub.dev/packages/console_bars)
 
 ## Usage
 
