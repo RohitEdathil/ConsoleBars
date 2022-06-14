@@ -22,3 +22,7 @@
 ## 1.0.4
 
 - Fixed "Cant read terminal width" error
+
+## 1.0.5
+
+- More documentation

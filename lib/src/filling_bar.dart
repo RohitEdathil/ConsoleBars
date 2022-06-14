@@ -8,23 +8,37 @@ import 'dart:io';
 /// Loading : ████████████████████████████████████████.................... 673/1000 67.3% [ 0:00:13.28 / 0:00:06.45 ]
 
 class FillingBar {
-  // Counts
+  /// Total number of steps
   final int total;
-  int current = 0;
-  int progress = 0;
+
+  int _current = 0;
+  int _progress = 0;
   late int max;
 
   // Time
-  final clock = Stopwatch();
+  final _clock = Stopwatch();
+
+  /// Whether a timer should be present
   bool time;
 
-  // Percentage
+  /// Percentage should be displayed or not
   bool percentage;
+
   // Decorations
+
+  /// The description of the bar
   final String desc;
+
+  /// The chararcter to used as space
   String space;
+
+  /// The character to used as fill
   String fill;
+
+  /// Scale of the bar relative to the terminal width
   double scale;
+
+  /// Width of the bar
   int? width;
 
   /// Arguments:
@@ -36,7 +50,6 @@ class FillingBar {
   /// - percentage : Toggle percentage display (default : false)
   /// - scale : Scale of the bar relative to width (between: 0 and 1, default: 0.5, Irrelavant if width is specified)
   /// - width : Width of the bar (If not specified, it will be automatically calculated using the terminal width and scale)
-  ///
   FillingBar(
       {required this.total,
       this.desc = "",
@@ -54,27 +67,27 @@ class FillingBar {
           "Could not get terminal width, try specifying a width manually");
     }
     if (time) {
-      clock.start();
+      _clock.start();
       scheduleMicrotask(autoRender);
     }
     _render();
   }
 
-  /// Updates the current value to n
+  /// Updates the _current value to n
   void update(int n) {
-    current = n;
+    _current = n;
     _render();
   }
 
-  /// Increments the current value
+  /// Increments the _current value
   void increment() {
-    current++;
+    _current++;
     _render();
   }
 
-  // Automatically updates the frame asynchronously
+  /// Automatically updates the frame asynchronously
   void autoRender() async {
-    while (clock.isRunning) {
+    while (_clock.isRunning) {
       sleep(Duration(seconds: 1));
       _render();
     }
@@ -82,29 +95,29 @@ class FillingBar {
 
   /// Renders a frame of the bar
   void _render() {
-    progress = ((current / total) * max).toInt();
-    if (progress >= max) {
-      progress = max;
-      if (clock.isRunning) {
-        clock.stop();
+    _progress = ((_current / total) * max).toInt();
+    if (_progress >= max) {
+      _progress = max;
+      if (_clock.isRunning) {
+        _clock.stop();
       }
     }
     String timeStr = "";
     if (time) {
-      final rate = clock.elapsedMicroseconds / (current == 0 ? 1 : current);
-      final eta = Duration(microseconds: ((total - current) * rate).toInt());
+      final rate = _clock.elapsedMicroseconds / (_current == 0 ? 1 : _current);
+      final eta = Duration(microseconds: ((total - _current) * rate).toInt());
       timeStr = "[ " +
-          clock.elapsed.toString().substring(0, 10) +
+          _clock.elapsed.toString().substring(0, 10) +
           " / " +
           eta.toString().substring(0, 10) +
           " ]";
     }
     String perc = '';
     if (percentage) {
-      perc = "${current * 100 / total}%";
+      perc = "${_current * 100 / total}%";
     }
     final frame =
-        "$desc : ${fill * progress}${space * (max - progress)} $current/$total $perc $timeStr";
+        "$desc : ${fill * _progress}${space * (max - _progress)} $_current/$total $perc $timeStr";
     stdout.write("\r");
     stdout.write(frame);
   }
