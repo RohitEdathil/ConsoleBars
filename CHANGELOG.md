@@ -26,3 +26,7 @@
 ## 1.0.5
 
 - More documentation
+
+## 1.1.0
+
+- Fixed [issue #4](https://github.com/RohitEdathil/ConsoleBars/issues/4)

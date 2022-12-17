@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:console_bars/console_bars.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
   // A bar that looks like
   //
   // Loading : ████████████████████████████████████████.................... 673/1000 67.3% [ 0:00:13.28 / 0:00:06.45 ]
@@ -11,7 +9,7 @@ void main(List<String> args) {
       desc: "Loading", total: 1000, time: true, percentage: true, scale: 0.2);
   for (var i = 0; i < 1000; i++) {
     p.increment();
-    sleep(Duration(milliseconds: 10));
+    await Future.delayed(Duration(milliseconds: 10000));
   }
   print("\nDone");
 }
