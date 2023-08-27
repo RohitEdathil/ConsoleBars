@@ -37,3 +37,5 @@ Result:
 ```
 Loading : ████████████████████████████████████████.................... 673/1000 67.3% [ 0:00:13.28 / 0:00:06.45 ]
 ```
+
+**Note:** You can use the `total` and `desc` setters to change the total number of steps and description mid-way.
