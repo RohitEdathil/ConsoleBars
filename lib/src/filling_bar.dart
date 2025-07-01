@@ -104,7 +104,7 @@ class FillingBar {
   void autoRender() async {
     while (_clock.isRunning) {
       await Future.delayed(Duration(seconds: 1));
-      _render();
+      if (_clock.isRunning) _render();
     }
   }
 
@@ -113,27 +113,33 @@ class FillingBar {
     _progress = ((_current / _total) * max).toInt();
     if (_progress >= max) {
       _progress = max;
-      if (_clock.isRunning) {
-        _clock.stop();
+    }
+    if (_clock.isRunning) {
+      String timeStr = "";
+      if (time) {
+        final rate =
+            _clock.elapsedMicroseconds / (_current == 0 ? 1 : _current);
+        final eta =
+            Duration(microseconds: ((_total - _current) * rate).toInt());
+        timeStr = "[ " +
+            _clock.elapsed.toString().substring(0, 10) +
+            " / " +
+            eta.toString().substring(0, 10) +
+            " ]";
+      }
+      String perc = '';
+      if (percentage) {
+        perc = "${(_current * 100 / _total).toStringAsFixed(1)}%";
+      }
+      final frame =
+          "$_desc : ${fill * _progress}${space * (max - _progress)} $_current/$_total $perc $timeStr";
+      stdout.write("\r");
+      stdout.write(frame);
+      if (_progress >= max) {
+        if (_clock.isRunning) {
+          _clock.stop();
+        }
       }
     }
-    String timeStr = "";
-    if (time) {
-      final rate = _clock.elapsedMicroseconds / (_current == 0 ? 1 : _current);
-      final eta = Duration(microseconds: ((_total - _current) * rate).toInt());
-      timeStr = "[ " +
-          _clock.elapsed.toString().substring(0, 10) +
-          " / " +
-          eta.toString().substring(0, 10) +
-          " ]";
-    }
-    String perc = '';
-    if (percentage) {
-      perc = "${(_current * 100 / _total).toStringAsFixed(1)}%";
-    }
-    final frame =
-        "$_desc : ${fill * _progress}${space * (max - _progress)} $_current/$_total $perc $timeStr";
-    stdout.write("\r");
-    stdout.write(frame);
   }
 }
