@@ -36,3 +36,7 @@
 - Fixed [issue #5](https://github.com/RohitEdathil/ConsoleBars/issues/5)
 
 - `total` and `desc` are now setters, updating them will change the total number of steps and description mid-way.
+
+## 1.2.1
+
+- Fixed [issue #6](https://github.com/RohitEdathil/ConsoleBars/issues/6)
