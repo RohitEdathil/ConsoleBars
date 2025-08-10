@@ -103,8 +103,8 @@ class FillingBar {
   /// Automatically updates the frame asynchronously
   void autoRender() async {
     while (_clock.isRunning) {
-      await Future.delayed(Duration(seconds: 1));
       _render();
+      await Future.delayed(Duration(seconds: 1));
     }
   }
 
