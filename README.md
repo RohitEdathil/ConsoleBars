@@ -18,7 +18,7 @@ Options:
 - `time `: Toggle timing mode (default : false)
 - `percentage` : Toggle percentage display (default : false)
 - `scale` : Scale of the bar relative to width (between: 0 and 1, default: 0.5, Irrelavant if width is specified)
-- `width` : Width of the bar (If not specified, it will be automatically calculated using the terminal width and scale)
+- `width` : Width of the bar (If not specified, it will be automatically calculated using the terminal width and scale. Falls back to 80 columns when the terminal width is unavailable, e.g. when stdout is not a terminal)
 
 Code:
 

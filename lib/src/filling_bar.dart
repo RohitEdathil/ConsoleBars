@@ -8,6 +8,10 @@ import 'dart:io';
 /// Loading : ████████████████████████████████████████.................... 673/1000 67.3% [ 0:00:13.28 / 0:00:06.45 ]
 
 class FillingBar {
+  /// Width assumed when the terminal width is unavailable, e.g. when stdout
+  /// is not a terminal (VS Code debug console, CI, files)
+  static const int _fallbackWidth = 80;
+
   /// Total number of steps
   int _total;
 
@@ -62,7 +66,7 @@ class FillingBar {
   /// - time : Toggle timing mode (default : false)
   /// - percentage : Toggle percentage display (default : false)
   /// - scale : Scale of the bar relative to width (between: 0 and 1, default: 0.5, Irrelavant if width is specified)
-  /// - width : Width of the bar (If not specified, it will be automatically calculated using the terminal width and scale)
+  /// - width : Width of the bar (If not specified, it will be automatically calculated using the terminal width and scale. Falls back to 80 columns when the terminal width is unavailable)
   FillingBar(
       {required int total,
       String desc = "",
@@ -74,12 +78,12 @@ class FillingBar {
       this.width})
       : _desc = desc,
         _total = total {
-    // Handles width of the bar, throws an error if it's not specified and the terminal width is not available
+    // Handles width of the bar, falling back to a default when the terminal
+    // width is not available
     try {
       max = width ?? ((stdout.terminalColumns - _desc.length) * scale).toInt();
     } on StdoutException {
-      throw StdoutException(
-          "Could not get terminal width, try specifying a width manually");
+      max = width ?? ((_fallbackWidth - _desc.length) * scale).toInt();
     }
     if (time) {
       _clock.start();
