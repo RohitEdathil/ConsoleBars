@@ -1,0 +1,68 @@
+name: Publish
+
+# Triggered by pushing a version tag, e.g. `git tag v1.4.0 && git push origin v1.4.0`.
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+# Never run two publish jobs for the same tag at the same time.
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Analyze
+        run: dart analyze
+
+      - name: Check tag matches pubspec version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -n 1 | tr -d '[:space:]')"
+          if [ "$tag" != "$version" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match version ${version} in pubspec.yaml"
+            exit 1
+          fi
+          echo "Tag ${GITHUB_REF_NAME} matches pubspec version ${version}"
+
+  publish:
+    name: Publish to pub.dev
+    needs: verify
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC authentication with pub.dev
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+
+  release:
+    name: Create GitHub release
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Release $GITHUB_REF_NAME already exists, nothing to do."
+          else
+            gh release create "$GITHUB_REF_NAME" \
+              --title "$GITHUB_REF_NAME" \
+              --generate-notes \
+              --verify-tag
+          fi
