@@ -40,3 +40,13 @@
 ## 1.2.1
 
 - Fixed [issue #6](https://github.com/RohitEdathil/ConsoleBars/issues/6)
+
+## 1.3.0
+
+- Fall back to 80 columns when the terminal width is unavailable (e.g. in CI, redirected output, or the VS Code debug console).
+
+- Erase leftovers when a rendered frame gets shorter.
+
+- Use a newline instead of a carriage return when stdout is not a terminal.
+
+- Relicensed under the MIT license.
