@@ -19,6 +19,9 @@ class FillingBar {
   int _progress = 0;
   late int max;
 
+  /// Whether stdout is attached to a terminal
+  late final bool _hasTerminal;
+
   /// Length of the previously rendered frame, used to erase leftovers
   int _lastFrameLength = 0;
 
@@ -83,6 +86,7 @@ class FillingBar {
         _total = total {
     // Handles width of the bar, falling back to a default when the terminal
     // width is not available
+    _hasTerminal = stdout.hasTerminal;
     try {
       max = width ?? ((stdout.terminalColumns - _desc.length) * scale).toInt();
     } on StdoutException {
@@ -124,6 +128,7 @@ class FillingBar {
         _clock.stop();
       }
     }
+    
     String timeStr = "";
     if (time) {
       final rate = _clock.elapsedMicroseconds / (_current == 0 ? 1 : _current);
@@ -134,15 +139,26 @@ class FillingBar {
           eta.toString().substring(0, 10) +
           " ]";
     }
+
     String perc = '';
     if (percentage) {
       perc = "${(_current * 100 / _total).toStringAsFixed(1)}%";
     }
+
     final frame =
         "$_desc : ${fill * _progress}${space * (max - _progress)} $_current/$_total $perc $timeStr";
+
     // Pad the frame so that leftovers of a longer previous frame are erased
     final padded = frame.padRight(_lastFrameLength);
     _lastFrameLength = frame.length;
+
+    // A carriage return only rewrites the current line on a real terminal.
+    // Elsewhere, start a new line for every frame instead.
+    if (!_hasTerminal) {
+      stdout.write("$padded\n");
+      return;
+    }
+
     stdout.write("\r$padded");
   }
 }
