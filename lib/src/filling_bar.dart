@@ -19,6 +19,9 @@ class FillingBar {
   int _progress = 0;
   late int max;
 
+  /// Length of the previously rendered frame, used to erase leftovers
+  int _lastFrameLength = 0;
+
   // Time
   final _clock = Stopwatch();
 
@@ -137,7 +140,9 @@ class FillingBar {
     }
     final frame =
         "$_desc : ${fill * _progress}${space * (max - _progress)} $_current/$_total $perc $timeStr";
-    stdout.write("\r");
-    stdout.write(frame);
+    // Pad the frame so that leftovers of a longer previous frame are erased
+    final padded = frame.padRight(_lastFrameLength);
+    _lastFrameLength = frame.length;
+    stdout.write("\r$padded");
   }
 }
